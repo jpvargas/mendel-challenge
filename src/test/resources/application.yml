@@ -1,0 +1,5 @@
+spring:
+  application.name: transactions-challenge
+  datasource:
+    url: jdbc:h2:mem:testdemotransactions
+    driverClassName: org.h2.Driver

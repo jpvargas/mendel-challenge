@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Color-Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout
+                    pattern="%style{%d{ISO8601}}{white} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%c{1.}}{bright,yellow}: %msg%n%style{%throwable}{bright,red}" />
+        </Console>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout
+                    pattern="%d{ISO8601} %-5level [%t] %c{1.}: %msg %throwable%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!-- LOG everything at INFO level -->
+        <Root level="INFO" additivity="false">
+            <AppenderRef ref="Color-Console" />
+        </Root>
+
+        <!-- LOG "com.mendel*" at INFO level -->
+        <Logger name="com.mendel" level="INFO" additivity="false">
+            <AppenderRef ref="Color-Console" />
+        </Logger>
+    </Loggers>
+
+</Configuration>

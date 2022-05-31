@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout
+                    pattern="%d{ISO8601} %-5level [%t] %c{1.}: %msg %throwable%n" />
+        </Console>
+        <Console name="Console-Data" target="SYSTEM_OUT" follow="true">
+            <PatternLayout
+                    pattern="%d{ISO8601} %-5level [%t] %c{1.}: %msg %throwable %X{data}%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!-- LOG everything at INFO level -->
+        <Root additivity="false">
+            <AppenderRef ref="Console" />
+        </Root>
+
+        <!-- LOG "com.frubana*" at INFO level -->
+        <Logger name="com.frubana" additivity="false">
+            <AppenderRef ref="Console-Data" />
+        </Logger>
+    </Loggers>
+</Configuration>

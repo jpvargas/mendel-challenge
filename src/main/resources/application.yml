@@ -1,0 +1,9 @@
+spring:
+  application.name: transactions-challenge
+
+server:
+  servlet.context-path: /transactions-challenge
+  port: 8080
+
+logging:
+  config: classpath:log4j.xml
