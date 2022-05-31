@@ -9,23 +9,23 @@ import java.util.Optional;
  */
 public class Transaction {
 
-  private Long id;
+  private Long transactionId;
 
   private Double amount;
 
   private String type;
 
-  private Optional<Long> transaction_id;
+  private Optional<Long> parentId;
 
   private Transaction(final Long id, final Double amount, final String type, final Optional<Long> transaction_id) {
-    this.id = id;
+    this.transactionId = id;
     this.amount = amount;
     this.type = type;
-    this.transaction_id = transaction_id;
+    this.parentId = transaction_id;
   }
 
-  public Long getId() {
-    return id;
+  public Long getTransactionId() {
+    return transactionId;
   }
 
   public Double getAmount() {
@@ -36,8 +36,8 @@ public class Transaction {
     return type;
   }
 
-  public Optional<Long> getTransaction_id() {
-    return transaction_id;
+  public Optional<Long> getParentId() {
+    return parentId;
   }
 
   /**
@@ -45,13 +45,13 @@ public class Transaction {
    */
   public static class Builder {
 
-    private Long id;
+    private Long transactionId;
     private Double amount;
     private String type;
-    private Optional<Long> transaction_id;
+    private Optional<Long> parentId;
 
-    public Builder id(final Long id) {
-      this.id = id;
+    public Builder transactionId(final Long transactionId) {
+      this.transactionId = transactionId;
       return this;
     }
 
@@ -65,18 +65,18 @@ public class Transaction {
       return this;
     }
 
-    public Builder transactionId(final Optional<Long> transaction_id) {
-      this.transaction_id = transaction_id;
+    public Builder parentId(final Optional<Long> parentId) {
+      this.parentId = parentId;
       return this;
     }
 
     public Transaction build() {
-      return new Transaction(id, amount, type, transaction_id);
+      return new Transaction(transactionId, amount, type, parentId);
     }
   }
 
   @Override
   public String toString() {
-    return "Transaction{" + "id=" + id + ", amount=" + amount + ", type='" + type + '\'' + ", transaction_id=" + transaction_id + '}';
+    return "{" + "id=" + transactionId + ", amount=" + amount + ", type='" + type + '\'' + ", transaction_id=" + parentId + '}';
   }
 }
