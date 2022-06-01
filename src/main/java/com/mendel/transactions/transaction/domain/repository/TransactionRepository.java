@@ -4,7 +4,7 @@ import com.mendel.transactions.common.exception.EntityNotFoundException;
 import com.mendel.transactions.transaction.domain.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
@@ -18,14 +18,17 @@ import java.util.stream.Collectors;
  *
  * @author jpvargas
  */
-@Repository
+@Component
 public class TransactionRepository {
 
   private final Logger logger = LoggerFactory.getLogger(TransactionRepository.class);
 
+  private static TransactionRepository instance;
+
   private static Set<Transaction> transactionsList;
 
   private TransactionRepository() {
+    transactionsList = new HashSet<>();
   }
 
   /**
@@ -33,10 +36,14 @@ public class TransactionRepository {
    *
    * @return singleton instance of Collections -> Set<Transactions>
    */
-  public static synchronized Set<Transaction> getInstance() {
-    if (transactionsList == null) {
-      transactionsList = new HashSet();
+  public static synchronized TransactionRepository getInstance() {
+    if (instance == null) {
+      return new TransactionRepository();
     }
+    return instance;
+  }
+
+  public static Set<Transaction> getTransactionsList() {
     return transactionsList;
   }
 
@@ -45,7 +52,7 @@ public class TransactionRepository {
    * @return Transaction object
    */
   public Transaction save(final Transaction transaction) {
-    getInstance().add(transaction);
+    getTransactionsList().add(transaction);
     logger.info("transaction {}. saved in our records", transaction);
     return transaction;
   }
@@ -55,7 +62,7 @@ public class TransactionRepository {
    * @return List of id's
    */
   public List<Long> findByType(final String type) {
-    return getInstance().stream()
+    return getTransactionsList().stream()
       .filter(transaction -> transaction.getType().equals(type))
       .map(Transaction::getTransactionId)
       .collect(Collectors.toUnmodifiableList());
@@ -66,7 +73,7 @@ public class TransactionRepository {
    * @return a Transaction object or Entity Not Found exception
    */
   public Transaction findByTransactionId(final long transactionId) {
-    return getInstance().stream()
+    return getTransactionsList().stream()
       .filter(transaction -> transaction.getTransactionId().equals(transactionId))
       .findFirst()
       .orElseThrow(() -> new EntityNotFoundException(Transaction.class,
@@ -74,9 +81,16 @@ public class TransactionRepository {
   }
 
   public Optional<Transaction> findChildByTransactionId(final Long transactionId) {
-    return getInstance().stream()
+    return getTransactionsList().stream()
       .filter(transaction -> transaction.getParentId().isPresent())
       .filter(transaction -> transaction.getParentId().get().equals(transactionId))
       .findFirst();
+  }
+
+  /**
+   * Clear collection
+   */
+  public void cleanRepository(){
+    getTransactionsList().clear();
   }
 }

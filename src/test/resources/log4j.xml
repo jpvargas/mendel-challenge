@@ -16,8 +16,8 @@
             <AppenderRef ref="Console" />
         </Root>
 
-        <!-- LOG "com.frubana*" at INFO level -->
-        <Logger name="com.frubana" additivity="false">
+        <!-- LOG "com.mendel*" at INFO level -->
+        <Logger name="com.mende" additivity="false">
             <AppenderRef ref="Console-Data" />
         </Logger>
     </Loggers>

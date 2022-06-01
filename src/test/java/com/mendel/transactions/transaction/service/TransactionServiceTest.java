@@ -3,6 +3,7 @@ package com.mendel.transactions.transaction.service;
 
 import com.mendel.transactions.transaction.domain.Transaction;
 import com.mendel.transactions.transaction.domain.dto.TransactionDTO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,11 @@ class TransactionServiceTest {
 
   @Autowired
   private TransactionService transactionService;
+
+  @BeforeEach
+  void setUp() {
+    transactionService.resetMemoryStore();
+  }
 
   @Test
   void testCreate() {

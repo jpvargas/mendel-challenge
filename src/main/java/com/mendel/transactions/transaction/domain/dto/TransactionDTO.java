@@ -1,6 +1,8 @@
 package com.mendel.transactions.transaction.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
@@ -26,6 +28,7 @@ public class TransactionDTO {
   @NotEmpty
   private String type;
 
+  @JsonInclude(Include.NON_NULL)
   @JsonProperty(PARENT_ID_FIELD)
   private Long parentId;
 

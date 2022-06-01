@@ -3,6 +3,7 @@ package com.mendel.transactions.transaction.application;
 import com.mendel.transactions.transaction.domain.Transaction;
 import com.mendel.transactions.transaction.domain.dto.TransactionDTO;
 import com.mendel.transactions.transaction.service.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A controller exposing endpoints related to transactions entities
+ * A controller exposing endpoints related to transactions
  *
  * @author jpvargas
  */
@@ -33,15 +34,17 @@ public class TransactionController {
     this.transactionService = transactionService;
   }
 
-  @PutMapping
+  @Operation(summary = "Create a new transaction.")
+  @PutMapping("/{transaction_id}")
   public ResponseEntity<TransactionDTO> create(
     @PathVariable(value = "transaction_id") final Long transactionId,
-    @Valid @RequestBody final TransactionDTO transactionDTO
+    @Valid @RequestBody(required = false) final TransactionDTO transactionDTO
   ) {
     final Transaction transaction = transactionService.create(transactionId, transactionDTO);
     return ResponseEntity.ok().body(transactionService.mapToTransactionDTO(transaction));
   }
 
+  @Operation(summary = "Gets list of transactions id by type")
   @GetMapping("/types/{type}")
   public ResponseEntity<List<Long>> getTransactionIdsByType(
     @PathVariable(value = "type") final String type
@@ -49,6 +52,7 @@ public class TransactionController {
     return ResponseEntity.ok().body(transactionService.findByType(type));
   }
 
+  @Operation(summary = "Get the sum of the amounts of the related transactions")
   @GetMapping("/sum/{transaction_id}")
   public ResponseEntity<Map<String, Double>> getTotalAmount(@PathVariable(value = "transaction_id") final Long transactionId) {
     final Double sum = transactionService.getTransactionTotalAmount(transactionId);

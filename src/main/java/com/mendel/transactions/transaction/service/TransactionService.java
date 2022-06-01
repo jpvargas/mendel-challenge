@@ -17,11 +17,7 @@ public class TransactionService {
 
   private final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
-  private final TransactionRepository repository;
-
-  public TransactionService(final TransactionRepository repository) {
-    this.repository = repository;
-  }
+  private final TransactionRepository repository = TransactionRepository.getInstance();
 
   /**
    * Create new transaction in ours records
@@ -82,6 +78,14 @@ public class TransactionService {
    * @return TransactionDTO
    */
   public TransactionDTO mapToTransactionDTO(final Transaction transaction) {
-    return new TransactionDTO(transaction.getAmount(), transaction.getType(), transaction.getTransactionId());
+    final Long parentId = transaction.getParentId().isPresent() ? transaction.getParentId().get() : null;
+    return new TransactionDTO(transaction.getAmount(), transaction.getType(), parentId);
+  }
+
+  /**
+   * Util for testing
+   */
+  public void resetMemoryStore(){
+    repository.cleanRepository();
   }
 }
