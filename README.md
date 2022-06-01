@@ -35,5 +35,4 @@ In other words, a command line like
 implicitly invokes unit tests. The build will break if any unit tests fail.
 
 ### API Documentation
-http://localhost:8080/transactions-challenge/swagger-ui/
-
+http://localhost:8080/transactions-challenge/swagger-ui/index.html
