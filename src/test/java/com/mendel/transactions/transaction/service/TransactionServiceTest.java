@@ -55,12 +55,12 @@ class TransactionServiceTest {
   void testTransactionsSum() {
     transactionService.create(10L, new TransactionDTO(5000D, "cars", null));
     transactionService.create(11L, new TransactionDTO(10000D, "shopping", 10L));
-    transactionService.create(12L, new TransactionDTO(500D, "shopping", 11L));
+    transactionService.create(12L, new TransactionDTO(5000D, "shopping", 11L));
 
-    Double totalAmount = transactionService.addAmountsForTransaction(10L);
+    Double totalAmount = transactionService.getTransactionTotalAmount(10L);
     assertThat(totalAmount).isEqualTo(20000D);
 
-    Double totalAmount_11 = transactionService.addAmountsForTransaction(11L);
+    Double totalAmount_11 = transactionService.getTransactionTotalAmount(11L);
     assertThat(totalAmount_11).isEqualTo(15000D);
 
   }
