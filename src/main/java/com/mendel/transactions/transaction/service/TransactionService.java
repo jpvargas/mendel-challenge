@@ -74,4 +74,14 @@ public class TransactionService {
     return transactionChild.map(value -> Double.sum(transaction.getAmount(), recursiveSumTransactionAmounts(value)))
       .orElseGet(transaction::getAmount);
   }
+
+  /**
+   * Mapper for convert Transaction to TransactionDTO Object
+   *
+   * @param transaction a Transaction entity
+   * @return TransactionDTO
+   */
+  public TransactionDTO mapToTransactionDTO(final Transaction transaction) {
+    return new TransactionDTO(transaction.getAmount(), transaction.getType(), transaction.getTransactionId());
+  }
 }

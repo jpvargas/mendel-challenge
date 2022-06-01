@@ -3,6 +3,9 @@ package com.mendel.transactions.transaction.domain.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  * Transaction DTO
  *
@@ -16,9 +19,11 @@ public class TransactionDTO {
   private static final String PARENT_ID_FIELD = "parent_id";
 
   @JsonProperty(AMOUNT_FIELD)
+  @NotNull
   private Double amount;
 
   @JsonProperty(TYPE_FIELD)
+  @NotEmpty
   private String type;
 
   @JsonProperty(PARENT_ID_FIELD)

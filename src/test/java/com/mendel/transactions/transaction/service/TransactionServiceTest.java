@@ -26,6 +26,7 @@ class TransactionServiceTest {
     TransactionDTO transactionDTO = new TransactionDTO(5000D, "cars", null);
 
     Transaction transaction = transactionService.create(transactionID, transactionDTO);
+
     assertThat(transaction).isNotNull();
     assertThat(transaction.getTransactionId()).isEqualTo(10L);
     assertThat(transaction.getAmount()).isEqualTo(5000D);
