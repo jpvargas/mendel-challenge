@@ -80,11 +80,11 @@ public class TransactionRepository {
         String.format("Transaction with id: %d, not found", transactionId)));
   }
 
-  public Optional<Transaction> findChildByTransactionId(final Long transactionId) {
+  public List<Transaction> findChildrensByTransactionId(final Long transactionId) {
     return getTransactionsList().stream()
       .filter(transaction -> transaction.getParentId().isPresent())
       .filter(transaction -> transaction.getParentId().get().equals(transactionId))
-      .findFirst();
+      .collect(Collectors.toUnmodifiableList());
   }
 
   /**

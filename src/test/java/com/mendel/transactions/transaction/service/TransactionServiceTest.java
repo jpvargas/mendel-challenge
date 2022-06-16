@@ -71,4 +71,16 @@ class TransactionServiceTest {
     assertThat(totalAmount_11).isEqualTo(15000D);
 
   }
+
+  @Test
+  void testTransactionsSumNew() {
+    transactionService.create(10L, new TransactionDTO(5000D, "cars", null));
+    transactionService.create(11L, new TransactionDTO(10000D, "shopping", 10L));
+    transactionService.create(12L, new TransactionDTO(5000D, "shopping", 11L));
+    transactionService.create(13L, new TransactionDTO(5000D, "shopping", 11L));
+
+    Double totalAmount = transactionService.getTransactionTotalAmount(11L);
+    assertThat(totalAmount).isEqualTo(20000D);
+
+  }
 }

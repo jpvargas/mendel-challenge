@@ -66,9 +66,14 @@ public class TransactionService {
    * @return Transactions amounts sum
    */
   public Double recursiveSumTransactionAmounts(final Transaction transaction) {
-    Optional<Transaction> transactionChild = repository.findChildByTransactionId(transaction.getTransactionId());
-    return transactionChild.map(value -> Double.sum(transaction.getAmount(), recursiveSumTransactionAmounts(value)))
-      .orElseGet(transaction::getAmount);
+    final List<Transaction> transactionChild = repository.findChildrensByTransactionId(transaction.getTransactionId());
+    if (transactionChild.isEmpty()) {
+      return transaction.getAmount();
+    } else {
+      return transaction.getAmount() + transactionChild.stream()
+        .map(this::recursiveSumTransactionAmounts)
+        .reduce(0.0, Double::sum);
+    }
   }
 
   /**
@@ -85,7 +90,7 @@ public class TransactionService {
   /**
    * Util for testing
    */
-  public void resetMemoryStore(){
+  public void resetMemoryStore() {
     repository.cleanRepository();
   }
 }
