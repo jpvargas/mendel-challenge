@@ -66,7 +66,7 @@ public class TransactionService {
    * @return Transactions amounts sum
    */
   public Double recursiveSumTransactionAmounts(final Transaction transaction) {
-    final List<Transaction> transactionChild = repository.findChildrensByTransactionId(transaction.getTransactionId());
+    final List<Transaction> transactionChild = repository.findChildrenByTransactionId(transaction.getTransactionId());
     if (transactionChild.isEmpty()) {
       return transaction.getAmount();
     } else {
